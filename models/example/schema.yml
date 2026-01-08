@@ -1,21 +1,21 @@
 
 version: 2
 
-models:
-    - name: my_first_dbt_model
-      description: "A starter dbt model"
-      columns:
-          - name: id
-            description: "The primary key for this table"
-            tests:
-                - unique
-                - not_null
-
-    - name: my_second_dbt_model
-      description: "A starter dbt model"
-      columns:
-          - name: id
-            description: "The primary key for this table"
-            tests:
-                - unique
-                - not_null
+sources:
+  - name: raw_bigquery_data
+    database: famous-phalanx-477116-p2
+    schema: healthtech_app
+    loader: bigquery
+    freshness:
+      warn_after: {count: 12, period: hour}
+      error_after: {count: 24, period: hour}
+    tables:
+    - name: raw_appointments
+      config:
+        alias: appointments
+    - name: raw_patients
+      config:
+        alias: patients
+    - name: raw_slots
+      config:
+        alias: slots
