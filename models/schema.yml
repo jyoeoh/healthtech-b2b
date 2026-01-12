@@ -9,7 +9,6 @@ sources:
     config:
       freshness:
         warn_after: {count: 12, period: hour}
-        error_after: {count: 24, period: hour}
     tables:
       - name: appointments
         identifier: raw_appointments
@@ -19,18 +18,34 @@ sources:
         columns:
           - name: appointment_id
             description: unique identifier for each appointment
+            tests:
+              - unique
+              - not_null
           - name: slot_id
             description: refers to the slot in the slots table
+            tests:
+              - not_null
           - name: scheduling_date
             description: date for when the appointment was scheduled
+            tests:
+              - not_null
           - name: appointment_date
             description: date of the appointment
+            tests:
+              - not_null
           - name: appointment_time
             description: scheduled time of the appointment
+            tests:
+              - not_null
           - name: scheduling_interval
             description: days between scheduling and appointment date
+            tests:
+              - not_null
           - name: status
-            description: appointment status (available, scheduled, completed, cancelled, no-show)
+            description: appointment status
+            data_tests:
+              - accepted_values:
+                  values: ['unknown', 'scheduled', 'attended', 'cancelled', 'did not attend']
           - name: check_in_time
             description: actual time the patient checked in
           - name: appointment_duration
@@ -43,12 +58,20 @@ sources:
             description: waiting time in minutes
           - name: patient_id
             description: refers to the patient in the patients table
+            tests:
+              - not_null
           - name: sex
             description: gender of the patient
+            tests:
+              - not_null
           - name: age
             description: age of the patient
+            tests:
+              - not_null
           - name: age_group
             description: age group category of the patient
+            tests:
+              - not_null
       - name: patients
         identifier: raw_patients
         description: patient information with patient_id as the unique identifier
@@ -57,14 +80,26 @@ sources:
         columns:
           - name: patient_id
             description: unique identifier for each patient
+            tests:
+              - unique
+              - not_null
           - name: name
             description: full name of patient 
+            tests:
+              - not_null
           - name: sex
             description: gender of patient (male, female, non-binary)
+            data_tests:
+              - accepted_values:
+                  values: ['Male', 'Female', 'Non-Binary']
           - name: dob
             description: date of birth of patient in yyyy-mm-dd
+            tests:
+              - not_null   
           - name: insurance
             description: name of the patient's insurance provider from a predefined list of fictitious names
+            tests:
+              - not_null            
       - name: slots
         identifier: raw_slots
         description: information about time slots available/not available for appointments with slot_id as the unique identifier
@@ -73,9 +108,18 @@ sources:
         columns:
           - name: slot_id
             description: unique identifier for each time slot
+            tests:
+              - unique
+              - not_null
           - name: appointment_date
             description: date of the appointment
+            tests:
+              - not_null
           - name: appointment_time
             description: scheduled time of the appointment (15 min intervals)
+            tests:
+              - not_null
           - name: is_available
             description: boolean indicating if the slot if available or not
+            tests:
+              - not_null            
