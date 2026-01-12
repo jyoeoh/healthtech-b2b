@@ -12,7 +12,7 @@ sources:
     tables:
       - name: appointments
         identifier: raw_appointments
-        description: appointment scheduling information with appointment_id as unique identifier
+        description: appointment scheduling information between 2014 and 2024 with appointment_id as unique identifier
         config:
           loaded_at_field: scheduling_date
         columns:
