@@ -1,0 +1,81 @@
+
+version: 2
+
+sources:
+  - name: raw_bigquery_data
+    database: famous-phalanx-477116-p2
+    schema: healthtech_app
+    loader: bigquery
+    config:
+      freshness:
+        warn_after: {count: 12, period: hour}
+        error_after: {count: 24, period: hour}
+    tables:
+      - name: appointments
+        identifier: raw_appointments
+        description: appointment scheduling information with appointment_id as unique identifier
+        config:
+          loaded_at_field: scheduling_date
+        columns:
+          - name: appointment_id
+            description: unique identifier for each appointment
+          - name: slot_id
+            description: refers to the slot in the slots table
+          - name: scheduling_date
+            description: date for when the appointment was scheduled
+          - name: appointment_date
+            description: date of the appointment
+          - name: appointment_time
+            description: scheduled time of the appointment
+          - name: scheduling_interval
+            description: days between scheduling and appointment date
+          - name: status
+            description: appointment status (available, scheduled, completed, cancelled, no-show)
+          - name: check_in_time
+            description: actual time the patient checked in
+          - name: appointment_duration
+            description: duration of the appointment in minutes
+          - name: start_time
+            description: actual start time of the appointment
+          - name: end_time
+            description: actual end time of the appointment
+          - name: waiting_time
+            description: waiting time in minutes
+          - name: patient_id
+            description: refers to the patient in the patients table
+          - name: sex
+            description: gender of the patient
+          - name: age
+            description: age of the patient
+          - name: age_group
+            description: age group category of the patient
+      - name: patients
+        identifier: raw_patients
+        description: patient information with patient_id as the unique identifier
+        config:
+          loaded_at_field: patient_id
+        columns:
+          - name: patient_id
+            description: unique identifier for each patient
+          - name: name
+            description: full name of patient 
+          - name: sex
+            description: gender of patient (male, female, non-binary)
+          - name: dob
+            description: date of birth of patient in yyyy-mm-dd
+          - name: insurance
+            description: name of the patient's insurance provider from a predefined list of fictitious names
+      - name: slots
+        identifier: raw_slots
+        description: information about time slots available/not available for appointments with slot_id as the unique identifier
+        config:
+          loaded_at_field: appointment_date
+        columns:
+          - name: slot_id
+            description: unique identifier for each time slot
+          - name: appointment_date
+            description: date of the appointment
+          - name: appointment_time
+            description: scheduled time of the appointment (15 min intervals)
+          - name: is_available
+            description: boolean indicating if the slot if available or not
