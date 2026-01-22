@@ -10,8 +10,8 @@ select
     app.status,
     app.waiting_time,
     app.appointment_duration,
-    
-    app.status = 'scheduled' as is_scheduled,
+
+    app.status = 'scheduled' as appointment_created,
     app.status = 'attended' as is_attended,
     app.status = 'cancelled' as is_cancelled,
     app.status = 'did not attend' as is_no_show,
