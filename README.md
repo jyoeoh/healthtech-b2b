@@ -1,16 +1,33 @@
-Welcome to your new dbt project!
+# Analytics Project: 
+## Medical Appointment Scheduling System
 
-### Using the starter project
+This project analyzes a synthetic healthcare appointment scheduling dataset to simulate product analytics work for a B2B SaaS company serving medical clinics.
+Resource: [LINK](https://www.kaggle.com/datasets/carogonzalezgaltier/medical-appointment-scheduling-system)
 
-Try running the following commands:
-- dbt run
-- dbt test
+### Goal:
+- To model appointment workflows, patient behavior, and operational efficiency using modern analytics tooling (BigQuery, dbt, SQL), and to surface insights that could
+inform product decisions, workflow automation, and customer-facing reporting (Looker).
 
-Slot utilization rate is at 1,0 because the system only records bookable slots
+### Tables:
+- **Appointments**: appointment lifecycle, status, waiting times, lead times
+- **Slots**: time-based availability for appointments
+- **Patients**: demographic information
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [dbt community](https://getdbt.com/community) to learn from other analytics engineers
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+The project follows a layered analytics modeling approach using dbt:
+- **stg_ models**: clean and standardize raw data (checking types, naming)
+- **int_ models**: add business meaning at the entity level (joining the tables for appointments, patients, slots)
+- **mart_ models**: aggregate data into product and operational KPIs for analytics and Looker Studio
+
+### Notes 
+#### Appointment Funnel Modeling
+
+The source data stores only the final status of an appointment (e.g. attended, cancelled, no-show), rather than each lifecycle event.
+As a result:
+- The funnel is modeled as outcome-based rather than step-based
+- "Total appointments" is used as the funnel entry point (count of appointment IDs)
+- Drop-off rate is defined as (cancelled + no-show) / total appointments
+
+This approach avoids misleading metrics and reflects how real-world production systems often store data.
+
+
+
