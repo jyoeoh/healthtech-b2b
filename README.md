@@ -6,7 +6,7 @@ Resource: [LINK](https://www.kaggle.com/datasets/carogonzalezgaltier/medical-app
 
 ### Goal:
 - To model appointment workflows, patient behavior, and operational efficiency using modern analytics tooling (BigQuery, dbt, SQL), and to surface insights that could
-inform product decisions, workflow automation, and customer-facing reporting (Looker).
+inform product decisions, workflow automation, and eventually customer-facing reporting.
 
 ### Tables:
 - **Appointments**: appointment lifecycle, status, waiting times, lead times
