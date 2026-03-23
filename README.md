@@ -1,4 +1,4 @@
-# Analytics Project: 
+# dbt modeling project: 
 ## Medical Appointment Scheduling System
 
 This project analyzes a synthetic healthcare appointment scheduling dataset to simulate product analytics work for a B2B SaaS company serving medical clinics.
